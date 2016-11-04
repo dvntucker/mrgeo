@@ -131,9 +131,9 @@ object GDALUtils extends Logging {
   }
 
   def createEmptyMemoryRaster(width: Int, height: Int, bands: Int, datatype: Int, nodatas: Array[Double] = null):Dataset = {
-    val driver: Driver = gdal.GetDriverByName("MEM")
-
-    val dataset = driver.Create("InMem", width, height, bands, datatype)
+    val driver: Driver = gdal.GetDriverByName("GTiff")
+    val filename = File.createTempFile("mrgeo", ".tiff")
+    val dataset = driver.Create(filename.toString(), width, height, bands, datatype)
 
     if (dataset != null) {
       if (nodatas != null) {
